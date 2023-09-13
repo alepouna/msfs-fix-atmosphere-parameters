@@ -1,0 +1,1 @@
+# msfs-fix-atmosphere-parameters
