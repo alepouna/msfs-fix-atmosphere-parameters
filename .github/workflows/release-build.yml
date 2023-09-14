@@ -54,14 +54,6 @@ jobs:
             name: build
             path: ./build
 
-        # Checkout the repo to get the version.txt file
-        - uses: actions/checkout@v2
-    
-        # Read .github/version.txt
-        - name: Read version.txt
-          id: read-version
-          run: echo "version=$(cat .github/version.txt)" >> $GITHUB_OUTPUT
-
         # Create the release
         - name: Create Release
           env:
@@ -70,23 +62,12 @@ jobs:
           run: |
             gh release create "$tag" \
                 --repo="$GITHUB_REPOSITORY" \
-                --title="v${{ steps.read-version.outputs.version }}" \
+                --title="Latest Release" \
                 --generate-notes
 
         - name: Get the ID of the created Release
           id: get-release-id
           run: echo "id=$(gh release view ${{ github.ref_name }} --repo="$GITHUB_REPOSITORY" --json id)" >> $GITHUB_OUTPUT
-
-        # Edit release notes to include text
-        - name: Edit Release Notes
-          env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                tag: ${{ github.ref_name }}
-          run: |
-                gh release edit "$tag" \
-                    --repo="$GITHUB_REPOSITORY" \
-                    --title="v${{ steps.read-version.outputs.version }}" \
-                    --notes="This is a release for v${{ steps.read-version.outputs.version }} of the fix-msfs-atmosphere tool. This tool is used to fix the atmosphere in Microsoft Flight Simulator 2020. This release is for the Windows version of the tool."
 
         - name: Upload Release Asset
           env:
@@ -94,6 +75,34 @@ jobs:
             tag: ${{ github.ref_name }}
           run: |
             gh release upload "$tag" ./build/fix-msfs-atmosphere.exe --repo="$GITHUB_REPOSITORY" --clobber
+
+        # CLeanup
+        - name: Cleanup
+          run: rm -rf ./build
+
+        # Checkout the repo to get the version.txt file
+        - uses: actions/checkout@v2
+    
+        # Read .github/version.txt
+        - name: Read version.txt
+          id: read-version
+          run: echo "version=$(cat .github/version.txt)" >> $GITHUB_OUTPUT
+
+        # Read the release notes from release
+        - name: Read release notes
+          id: read-release-notes
+          run: echo "release_notes=$(gh release view ${{ github.ref_name }} --repo="$GITHUB_REPOSITORY" --json body)" >> $GITHUB_OUTPUT
+
+        # Rename the release to version number
+        - name: Rename Release
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref_name }}
+          run: |
+            gh release edit "$tag" \
+                --repo="$GITHUB_REPOSITORY" \
+                --title="v${{ steps.read-version.outputs.version }}" \
+                --notes="${{ steps.read-release-notes.outputs.release_notes }}\n\n## How to use Instructions:\nRead https://github.com/auroraisluna/msfs-fix-atmosphere-parameters"
 
     # If release fails, delete the release
     delete-release:
