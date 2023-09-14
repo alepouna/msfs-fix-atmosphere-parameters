@@ -29,6 +29,10 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
 
+    # Delete index.js from build folder
+    - name: Delete index.js
+      run: rm -rf ./build/index.js
+
     # Upload artifact
     - name: Upload artifact
       uses: actions/upload-artifact@v2
