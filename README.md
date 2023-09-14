@@ -32,6 +32,10 @@ If you get an error, please open an issue and attach a screenshot of the error m
 Common errors:
 - "Error: FlightSimulator.exe does not exist.": Make sure you have copied the FlightSimulator.exe as described in the [How to use](#how-to-use) section.
 
+## Need help?
+
+Join my Discord: https://discord.gg/5MeXEJzubC or open an issue.
+
 ## Development
 
 ### Requirements
