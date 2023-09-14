@@ -57,7 +57,7 @@ jobs:
         # Read .github/version.txt
         - name: Read version.txt
           id: read-version
-          run: echo ::set-output name=version::$(cat .github/version.txt)
+          run: echo "version=$(cat ../.github/version.txt)" >> $GITHUB_OUTPUT
 
         # Create the release
         - name: Create Release
@@ -72,7 +72,18 @@ jobs:
 
         - name: Get the ID of the created Release
           id: get-release-id
-          run: echo ::set-output name=id::$(gh release view ${{ github.ref_name }} --repo="$GITHUB_REPOSITORY" --json id)
+          run: echo "id=$(gh release view ${{ github.ref_name }} --repo="$GITHUB_REPOSITORY" --json id)" >> $GITHUB_OUTPUT
+
+        # Edit release notes to include text
+        - name: Edit Release Notes
+          env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                tag: ${{ github.ref_name }}
+          run: |
+                gh release edit "$tag" \
+                    --repo="$GITHUB_REPOSITORY" \
+                    --title="v${{ steps.read-version.outputs.version }}" \
+                    --notes="This is a release for v${{ steps.read-version.outputs.version }} of the fix-msfs-atmosphere tool. This tool is used to fix the atmosphere in Microsoft Flight Simulator 2020. This release is for the Windows version of the tool."
 
         - name: Upload Release Asset
           env:
