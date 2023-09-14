@@ -54,6 +54,24 @@ jobs:
             name: build
             path: ./build
 
+        # Increase version number
+        - name: Increase version number
+          run: npm version patch
+
+        # Fetch the new version number
+        - name: Fetch the new version number
+          id: get-version
+          run: echo ::set-output name=version::$(node -p "require('./package.json').version")
+
+        # Commit the new version number
+        - name: Commit the new version number
+          run: |
+            git config --local user.email "
+            git config --local user.name "
+            git commit -am "Bump version to ${{ steps.get-version.outputs.version }}"
+            git push
+
+        # Create the release
         - name: Create Release
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,7 +79,7 @@ jobs:
           run: |
             gh release create "$tag" \
                 --repo="$GITHUB_REPOSITORY" \
-                --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+                --title="$tag" \
                 --generate-notes
 
         - name: Get the ID of the created Release
