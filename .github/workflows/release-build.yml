@@ -100,8 +100,7 @@ jobs:
           run: |
             gh release edit "$tag" \
                 --repo="$GITHUB_REPOSITORY" \
-                --title="Latest Release - ${{ steps.read-version.outputs.version }}" \
-                --clobber
+                --title="Latest - v${{ steps.read-version.outputs.version }}" \
 
 
     # If release fails, delete the release
