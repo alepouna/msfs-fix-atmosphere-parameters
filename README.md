@@ -22,8 +22,14 @@ Make sure you download the `fix-msfs-atmosphere.exe` file not the source code!
 
 ## How to revert
 
+You have two options: 
+
+Option A: Steam Integrity Check (not recommended for standard installations - may delete your community folder in some cases if you do not use a seperate community folder and use addon linker for example)
 1. Open Steam, right click on Microsoft Flight Simulator, click on Properties, click on Local Files, click on Verify Integrity of Game Files
 2. Wait for the process to finish
+
+Option B: Copy the original FlightSimulator.exe
+Since you have copied the original FlightSimulator.exe in step 3 of the [How to use](#how-to-use) section, you can just copy it back to the folder you found in step 3 and rename it to FlightSimulator.exe
 
 ## Errors
 
