@@ -54,6 +54,11 @@ jobs:
             name: build
             path: ./build
 
+        # Read .github/version.txt
+        - name: Read version.txt
+          id: read-version
+          run: echo ::set-output name=version::$(cat .github/version.txt)
+
         # Create the release
         - name: Create Release
           env:
@@ -62,7 +67,7 @@ jobs:
           run: |
             gh release create "$tag" \
                 --repo="$GITHUB_REPOSITORY" \
-                --title="Latest Release - ${{ github.ref_name }}" \
+                --title="v${{ steps.read-version.outputs.version }}" \
                 --generate-notes
 
         - name: Get the ID of the created Release
