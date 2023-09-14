@@ -5,7 +5,7 @@
   "main": "src/index.mjs",
   "scripts": {
     "run": "node src/index.mjs",
-    "build": "ncc build -o .\\build .\\src\\index.js && pkg .\\build\\index.js  -t node16-win-x64 -o .\\build\\fix-msfs-atmosphere.exe"
+    "build": "ncc build -o ./build ./src/index.js && pkg ./build/index.js  -t node16-win-x64 -o ./build/fix-msfs-atmosphere.exe"
   },
   "keywords": [
     "msfs",
