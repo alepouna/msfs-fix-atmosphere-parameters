@@ -69,15 +69,11 @@ jobs:
           run: echo ::set-output name=id::$(gh release view ${{ github.ref_name }} --repo="$GITHUB_REPOSITORY" --json id)
 
         - name: Upload Release Asset
-          id: upload-release-asset 
-          uses: actions/upload-release-asset@v1
           env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-                upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.get-release-id.outputs.id }}/assets{?name,label}
-                asset_path: ./build
-                asset_name: fix-msfs-atmosphere.exe
-                asset_content_type: application/zip
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref_name }}
+          run: |
+            gh release upload "$tag" ./build/fix-msfs-atmosphere.exe --repo="$GITHUB_REPOSITORY" --clobber
 
     # If release fails, delete the release
     delete-release:
