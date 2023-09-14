@@ -45,6 +45,8 @@ jobs:
 
         needs: build
 
+        permissions: write-all
+
         steps:
         - name: Download artifact
           uses: actions/download-artifact@v2
