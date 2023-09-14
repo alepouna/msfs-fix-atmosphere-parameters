@@ -11,6 +11,7 @@ The JavaScript code is based on the C++ work of maya_biology on the "Hot Start" 
 ## How to use
 
 1. Download the latest release from the [releases page](https://github.com/auroraisluna/msfs-fix-atmosphere-parameters/releases/latest)
+Make sure you download the `fix-msfs-atmosphere.exe` file not the source code!
 2. Extract the `fix-msfs-atmosphere.exe` file in a folder
 3. Copy the FlightSimulator.exe. You can find your FlightSimulator.exe: Open Steam, right click on Microsoft Flight Simulator, click on Properties, click on Local Files, click on Browse Local Files. 
 4. Paste the FlightSimulator.exe in the folder you created in step 2
