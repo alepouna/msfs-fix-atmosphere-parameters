@@ -76,5 +76,19 @@ jobs:
           with:
                 upload_url: https://uploads.github.com/repos/${{ github.repository }}/releases/${{ steps.get-release-id.outputs.id }}/assets{?name,label}
                 asset_path: ./build
-                asset_name: fix-msfs-atmosphere
+                asset_name: fix-msfs-atmosphere.exe
                 asset_content_type: application/zip
+
+    # If release fails, delete the release
+    delete-release:
+        runs-on: ubuntu-latest
+        needs: release
+        permissions: write-all
+        if: failure()
+        steps:
+        - name: Delete Release
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref_name }}
+          run: |
+            gh release delete "$tag" --repo="$GITHUB_REPOSITORY" --yes
