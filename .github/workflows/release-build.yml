@@ -54,10 +54,13 @@ jobs:
             name: build
             path: ./build
 
+        # Checkout the repo to get the version.txt file
+        - uses: actions/checkout@v2
+    
         # Read .github/version.txt
         - name: Read version.txt
           id: read-version
-          run: echo "version=$(cat ../.github/version.txt)" >> $GITHUB_OUTPUT
+          run: echo "version=$(cat .github/version.txt)" >> $GITHUB_OUTPUT
 
         # Create the release
         - name: Create Release
