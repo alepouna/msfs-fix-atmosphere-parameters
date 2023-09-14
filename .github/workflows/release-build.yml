@@ -92,6 +92,17 @@ jobs:
           id: read-version
           run: echo "version=$(cat .github/version.txt)" >> $GITHUB_OUTPUT
 
+        # Rename the release
+        - name: Rename Release
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref_name }}
+          run: |
+            gh release edit "$tag" \
+                --repo="$GITHUB_REPOSITORY" \
+                --title="Latest Release - ${{ steps.read-version.outputs.version }}" \
+                --clobber
+
 
     # If release fails, delete the release
     delete-failed-release:
