@@ -67,6 +67,9 @@ jobs:
 
         - name: Get the ID of the created Release
           id: get-release-id
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref_name }}
           run: echo "id=$(gh release view ${{ github.ref_name }} --repo="$GITHUB_REPOSITORY" --json id)" >> $GITHUB_OUTPUT
 
         - name: Upload Release Asset
@@ -91,6 +94,9 @@ jobs:
         # Read the release notes from release
         - name: Read release notes
           id: read-release-notes
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            tag: ${{ github.ref_name }}
           run: echo "release_notes=$(gh release view ${{ github.ref_name }} --repo="$GITHUB_REPOSITORY" --json body)" >> $GITHUB_OUTPUT
 
         # Rename the release to version number
