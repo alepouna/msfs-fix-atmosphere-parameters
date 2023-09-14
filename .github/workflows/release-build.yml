@@ -63,7 +63,6 @@ jobs:
             gh release create "$tag" \
                 --repo="$GITHUB_REPOSITORY" \
                 --title="Latest Release" \
-                --notes="## Read the [README](https://github.com/auroraisluna/msfs-fix-atmosphere-parameters) for instructions"
                 --generate-notes \
 
 
