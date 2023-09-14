@@ -72,7 +72,8 @@ async function main() { //Hi java
             console.log(' ')
             console.error(`  ⚠️ Error: ${inputFilePath} does not exist. Read the README.md on GitHub if you are just running this blindly.`);
             console.log('  https://github.com/auroraisluna/msfs-fix-atmosphere-parameters')
-            process.exit(4058);
+            //Hold the process open until the user exits
+            process.stdin.resume();
         };
 
         console.error('  Error:', error);
