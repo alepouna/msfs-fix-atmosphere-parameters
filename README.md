@@ -1,8 +1,15 @@
 # msfs-fix-atmosphere-parameters
 
+
+# NO LONGER MAINTAINED
+
+I do not have time to keep searching the hex values and release a patch on this program every time Asobo updates their exes (nor can fetch them for either Steam and MS Store :/) so I've decided I am not going to be updating this program. 
+Please use this instead: https://github.com/jet2code/arpc-injector
+
+
 ![Build](https://github.com/auroraisluna/msfs-fix-atmosphere-parameters/actions/workflows/release-build.yml/badge.svg) ![Discord](https://discord.com/api/guilds/933058285140078653/widget.png?style=shield)
 
-**⚠️ STEAM VERSION ONLY**
+**⚠️ 1.31.3 STEAM VERSION ONLY**
 
 This tool modifies the atmosphere parameters on the FlightSimulator.exe to improve visuals. 
 
